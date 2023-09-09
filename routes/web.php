@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::get('/banners', [BannerController::class, 'index'])->name('banners');
     Route::get('/banners/create/', [BannerController::class, 'create']);
     Route::post('/banners/create/', [BannerController::class, 'store']);
+    Route::get('/banners/view/{id}', [BannerController::class, 'view']);
     Route::get('/banners/edit/{id}', [BannerController::class, 'edit']);
     Route::post('/banners/edit/{id}', [BannerController::class, 'update']);
     Route::post('/banners/delete/', [BannerController::class, 'delete']);
@@ -70,6 +71,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::get('/blogs', [BlogController::class, 'index']);
     Route::get('/blogs/create/', [BlogController::class, 'create']);
     Route::post('/blogs/create/', [BlogController::class, 'store']);
+    Route::get('/blogs/view/{id}', [BlogController::class, 'view']);
     Route::get('/blogs/edit/{id}', [BlogController::class, 'edit']);
     Route::post('/blogs/edit/{id}', [BlogController::class, 'update']);
     Route::post('/blogs/delete/', [BlogController::class, 'delete']);
