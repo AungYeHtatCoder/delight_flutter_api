@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\PermissionsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UserLogActivityController;
+use App\Http\Controllers\Admin\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::resource('profiles', ProfileController::class);
     //Route::post('/profiles/update/', [ProfileController::class, 'profileChange']);
     // brand_categories resource rotues
-    // change password route with auth id 
+    // change password route with auth id
     Route::put('/change-password', [ProfileController::class, 'changePassword'])->name('changePassword');
     // PhoneAddressChange route with auth id route with put method
     Route::put('/change-phone-address', [ProfileController::class, 'PhoneAddressChange'])->name('changePhoneAddress');
@@ -50,5 +55,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::get('logActivity', [App\Http\Controllers\Admin\UserLogActivityController::class, 'index'])->name('logActivity');
     Route::delete('/admin/logActivity/{id}', [UserLogActivityController::class, 'destroy'])->name('logActivity.destroy');
     Route::get('/admin/logActivity/{id}', [UserLogActivityController::class, 'show'])->name('logActivity.show');
+
+
+    //ads banner crud
+    Route::get('/banners', [BannerController::class, 'index'])->name('banners');
+    Route::get('/banners/create/', [BannerController::class, 'create']);
+    Route::post('/banners/create/', [BannerController::class, 'store']);
+    Route::get('/banners/edit/{id}', [BannerController::class, 'edit']);
+    Route::post('/banners/edit/{id}', [BannerController::class, 'update']);
+    Route::post('/banners/delete/', [BannerController::class, 'delete']);
+    Route::post('/banners/statusChange/{id}', [BannerController::class, 'statusChange']);
+
+    //blog crud
+    Route::get('/blogs', [BlogController::class, 'index']);
+    Route::get('/blogs/create/', [BlogController::class, 'create']);
+    Route::post('/blogs/create/', [BlogController::class, 'store']);
+    Route::get('/blogs/edit/{id}', [BlogController::class, 'edit']);
+    Route::post('/blogs/edit/{id}', [BlogController::class, 'update']);
+    Route::post('/blogs/delete/', [BlogController::class, 'delete']);
 
     });

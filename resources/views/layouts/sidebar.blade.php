@@ -56,6 +56,18 @@
  </li>
  @endcan
 
+ <li class=" nav-item"><a href="#"><i class="la la-clipboard"></i><span class="menu-title"
+    data-i18n="Invoice">User Interface</span></a>
+  <ul class="menu-content">
+   <li><a class="menu-item" href="{{ url('/admin/banners/') }}"><i></i><span data-i18n="Invoice Summary">Ads Banner</span></a>
+   </li>
+   <li><a class="menu-item" href="{{ url('/admin/blogs/') }}"><i></i><span data-i18n="Invoice Template">Blog</span></a>
+   </li>
+   {{-- <li><a class="menu-item" href="invoice-list.html"><i></i><span data-i18n="Invoice List"></span></a> --}}
+   </li>
+  </ul>
+ </li>
+
 
  {{-- <li class=" nav-item"><a href="#"><i class="la la-file-text"></i><span class="menu-title"
     data-i18n="Form Layouts">ArtManagenment</span></a>
