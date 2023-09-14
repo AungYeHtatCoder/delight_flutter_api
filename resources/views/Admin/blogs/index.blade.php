@@ -25,9 +25,9 @@
       <ol class="breadcrumb">
        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a>
        </li>
-       <li class="breadcrumb-item"><a href="{{ url('/admin/banners/') }}">Create Banner</a>
+       <li class="breadcrumb-item"><a href="{{ url('/admin/blogs/') }}">Create Blog</a>
        </li>
-       <li class="breadcrumb-item active">Banner Responsive Datatable
+       <li class="breadcrumb-item active">Blog Responsive Datatable
        </li>
       </ol>
      </div>
@@ -56,7 +56,7 @@
    <div class="card">
     <div class="card-header">
      <h4 class="card-title">
-      <a href="{{ url('/admin/banners/create/') }}" class="btn btn-success btn-round">New Banner Create</a>
+      <a href="{{ url('/admin/blogs/create/') }}" class="btn btn-success btn-round">New Blog Create</a>
      </h4>
      <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
      <div class="heading-elements">
@@ -83,7 +83,8 @@
         <tr>
          <th>ID</th>
          <th>Image</th>
-         <th>Status</th>
+         <th>Title</th>
+         <th>Created By</th>
          <th>Created_At</th>
          <th>Updated_At</th>
          <th>Action</th>
@@ -91,26 +92,20 @@
         </tr>
        </thead>
        <tbody>
-        @foreach ($banners as $key => $banner)
+        @foreach ($blogs as $key => $blog)
         <tr>
          <td>{{ ++$key }}</td>
-         <td><img src="{{ asset('assets/img/banners/'.$banner->image) }}" width="100px" class="img-thumbnail" alt=""></td>
+         <td><img src="{{ asset('assets/img/blogs/'.$blog->image) }}" width="100px" class="img-thumbnail" alt=""></td>
+         <td>{{ $blog->title }}</td>
+         <td>{{ $blog->users->name }}</td>
+         <td>{{ $blog->created_at->format('M j, Y') }}</td>
+         <td>{{ $blog->updated_at->format('M j, Y') }}</td>
          <td>
-            {{-- <span class="badge badge-{{ $banner->status === 1 ? "success" : "danger" }}">{{ $banner->status === 1 ? "ON" : "OFF" }}</span> --}}
-            <form action="{{ url('/admin/banners/statusChange/'.$banner->id) }}" method="post">
-                @csrf
-                <input type="hidden" name="status" value="{{ $banner->status === 1 ? 0 : 1 }}">
-                <button class="btn" type="submit"><i class="fa-solid text-primary fa-2x fa-toggle-{{ $banner->status === 1 ? "on" : "off" }}"></i></button>
-            </form>
-        </td>
-         <td>{{ $banner->created_at->format('M j, Y') }}</td>
-         <td>{{ $banner->updated_at->format('M j, Y') }}</td>
-         <td>
-          <a href="{{ url('/admin/banners/edit/'.$banner->id) }}" class="btn btn-warning btn-sm">Edit</a>
-          <a href="{{ url('/admin/banners/view/'.$banner->id) }}" class="btn btn-primary btn-sm">Show</a>
-          <form class="d-inline" action="{{ url('/admin/banners/delete/') }}" method="POST">
+          <a href="{{ url('/admin/blogs/edit/'.$blog->id) }}" class="btn btn-warning btn-sm">Edit</a>
+          <a href="{{ url('/admin/blogs/view/'.$blog->id) }}" class="btn btn-primary btn-sm">Show</a>
+          <form class="d-inline" action="{{ url('/admin/blogs/delete/') }}" method="POST">
            @csrf
-           <input type="hidden" name="id" value="{{ $banner->id }}">
+           <input type="hidden" name="id" value="{{ $blog->id }}">
            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
           </form>
 
