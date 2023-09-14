@@ -62,13 +62,42 @@
                         <img class="rounded-circle" width="90px" height="90px" src="{{ asset('assets/img/profile/'.$comment->users->profile) }}" alt="Awesome Image" />
                         </div>
                         <div class="text-box col-md-10 col-8 p-l-0 p-r0">
-                        <h5 class="">{{ $comment->users->name}}</h5>
-                        <p>
-                            {{ $comment->comment }}
-                        </p>
-                        <ul class="list-inline">
-                            <li><a href="javascript:void(0);">{{ $comment->created_at->format('M, j Y') }}</a></li>
-                        </ul>
+                          <div class="d-flex">
+                            <h5 class="">{{ $comment->users->name}}</h5>
+                            @auth
+                                @if ($comment->user_id === Auth::user()->id)
+                                    <div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical text-secondary"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <button class="btn btn-sm text-success edit" data-id="{{ $comment->id }}" data-comment="{{ $comment->comment }}" data-bs-toggle="modal" data-bs-target="#editComment">
+                                            <i class="fas fa-pen-to-square "></i>
+                                            Edit
+                                            </button>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <button class="btn btn-sm text-danger delete" data-id="{{ $comment->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                            <i class="fas fa-trash"></i>
+                                            Delete
+                                            </button>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                    </div>
+                                @endif
+                            @endauth
+
+                          </div>
+
+                          <p>
+                              {{ $comment->comment }}
+                          </p>
+                          <ul class="list-inline">
+                              <li><a href="javascript:void(0);">{{ $comment->created_at->format('M, j Y') }}</a></li>
+                          </ul>
                         </div>
                     </li>
                     <hr />
@@ -134,7 +163,73 @@
         </div>
       </div>
       @endauth
-
     </div>
   </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="editComment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Comment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ url('/comment/edit/') }}" method="post">
+                @csrf
+                <div class="mb-3">
+                    <input type="hidden" name="id" id="edit_id">
+                    <textarea name="comment" id="comment" cols="30" rows="5" class="form-control"></textarea>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-primary" type="submit"><i class="fas fa-pen-to-square me-2"></i>Edit</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <i class="fas fa-warning text-danger fa-2x mb-3"></i>
+          <p class="modal-title fs-5" id="deleteModalLabel">Are you sure "Delete"?</p>
+          <span class="badge badge-danger">*All chapters in the Book will be removed!.</span>
+        </div>
+        <div class="modal-footer m-auto">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="fas fa-xmark me-2"></i>Cancle</button>
+          <form action="{{ url('/comment/delete/') }}" method="post">
+            @csrf
+            <input type="hidden" name="id" id="delete_id" value="">
+            <button class="btn btn-success" type="submit"><i class="fas fa-check me-2"></i>Confirm</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function(){
+        $(".edit").click(function(){
+            $id = $(this).data('id');
+            $comment = $(this).data('comment');
+
+            $("#edit_id").val($id);
+            $("#comment").val($comment);
+        });
+        $(".delete").click(function(){
+            $id = $(this).data('id');
+            $("#delete_id").val($id);
+        })
+    });
+</script>
 @endsection
