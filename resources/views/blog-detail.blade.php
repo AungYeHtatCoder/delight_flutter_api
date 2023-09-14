@@ -110,6 +110,7 @@
           </div>
         </div>
       </div>
+      @auth
       <div class="col-md-4">
         <div class="card p-4 user">
           <div
@@ -132,6 +133,8 @@
           </div>
         </div>
       </div>
+      @endauth
+
     </div>
   </div>
 @endsection
