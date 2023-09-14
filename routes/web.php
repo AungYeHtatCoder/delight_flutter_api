@@ -30,6 +30,8 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/like/{id}', [HomeController::class, 'like']);
 Route::post('/comment/create/{id}', [HomeController::class, 'comment']);
+Route::post('/comment/edit/', [HomeController::class, 'commentEdit']);
+Route::post('/comment/delete/', [HomeController::class, 'commentDelete']);
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/register', [HomeController::class, 'register'])->name('register');
 Route::get('/blog-detail/{id}', [HomeController::class, 'blogDetail']);

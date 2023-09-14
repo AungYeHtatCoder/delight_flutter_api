@@ -67,6 +67,29 @@ class HomeController extends Controller
         return redirect()->back()->with('success', "Comment Created.");
     }
 
+    public function commentEdit(Request $request){
+        $request->validate([
+            'comment' => 'required'
+        ]);
+        $comment = Comment::find($request->id);
+        if(!$comment){
+            return redirect()->back()->with('error', "Comment Not Found!");
+        }
+        $comment->update([
+            'comment' => $request->comment
+        ]);
+        return redirect()->back()->with('success', "Comment Updated.");
+    }
+
+    public function commentDelete(Request $request){
+        $comment = Comment::find($request->id);
+        if(!$comment){
+            return redirect()->back()->with('error', "Comment Not Found!");
+        }
+        Comment::destroy($request->id);
+        return redirect()->back()->with('success', "Comment Deleted.");
+    }
+
     public function login(){
         return view('login');
     }
