@@ -20,9 +20,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Illuminate\Auth\Events\Login' => [
         'App\Listeners\GiveDailyLoginPoints',
-        ],
-        'Illuminate\Auth\Events\Login' => [
-            'App\Listeners\LogUserLogin',
+        'App\Listeners\LogUserLogin',
         ],
     ];
 
