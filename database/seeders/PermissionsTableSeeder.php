@@ -110,6 +110,43 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2023-02-10 14:00:26',
                 'updated_at' => '2023-02-10 14:00:26',
             ],
+
+            [
+                'id'         => '17',
+                'title'      => 'blog_post_management_access',
+                'created_at' => '2023-02-10 14:00:26',
+                'updated_at' => '2023-02-10 14:00:26',
+            ],
+            [
+                'id'         => '18',
+                'title'      => 'blog_post_create',
+                'created_at' => '2023-02-10 14:00:26',
+                'updated_at' => '2023-02-10 14:00:26',
+            ],
+            [
+                'id'         => '19',
+                'title'      => 'blog_post_edit',
+                'created_at' => '2023-02-10 14:00:26',
+                'updated_at' => '2023-02-10 14:00:26',
+            ],
+            [
+                'id'         => '20',
+                'title'      => 'blog_post_show',
+                'created_at' => '2023-02-10 14:00:26',
+                'updated_at' => '2023-02-10 14:00:26',
+            ],
+            [
+                'id'         => '21',
+                'title'      => 'blog_post_delete',
+                'created_at' => '2023-02-10 14:00:26',
+                'updated_at' => '2023-02-10 14:00:26',
+            ],
+            [
+                'id'         => '22',
+                'title'      => 'blog_post_access',
+                'created_at' => '2023-02-10 14:00:26',
+                'updated_at' => '2023-02-10 14:00:26',
+            ],
         ];
 
         Permission::insert($permissions);

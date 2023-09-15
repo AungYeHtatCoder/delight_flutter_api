@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\V1\Admin\AuthApiController;
 use App\Http\Controllers\Api\V1\Admin\RolesApiController;
 use App\Http\Controllers\Api\V1\Admin\UsersApiController;
 use App\Http\Controllers\Api\V1\Admin\ProfileApiController;
+use App\Http\Controllers\Api\V1\Admin\BlogPostApiController;
 use App\Http\Controllers\Api\V1\Admin\PermissionsApiController;
+use App\Http\Controllers\Api\V1\User\NoAuth\UserBlogPostApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,8 @@ use App\Http\Controllers\Api\V1\Admin\PermissionsApiController;
 Route::post('/auth/register', [AuthApiController::class, 'createUser']);
 Route::post('/auth/login', [AuthApiController::class, 'loginUser']);
 Route::post('/auth/logout', [AuthApiController::class, 'logoutUser']);
+//blog post
+Route::get('/blog-posts', [UserBlogPostApiController::class, 'index']);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers\Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
     // Permissions
@@ -43,4 +47,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     // PhoneAddressChange
     Route::put('/phone-address-change', [ProfileApiController::class, 'PhoneAddressChange']);
     
+    // Blog Post
+    Route::post('blog-posts/media', [BlogPostApiController::class, 'storeMedia'])->name('blog-posts.storeMedia');
+    Route::apiResource('blog-posts', BlogPostApiController::class);
 });
