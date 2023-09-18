@@ -1,9 +1,27 @@
 <div class="container-fluid post" style="margin-top: 50px">
-    <h4
-      style="text-align: center; color: #31a9e1;font-weight: 800;"
-    >
-      ALL POST
+    <h4 style="text-align: center; color: #31a9e1;font-weight: 800;">
+        @isset($search)
+        {{ "Search Results of " }}
+        @endisset
+        "{{ $search ?? "ALL POST" }}"
+
     </h4>
+    <div class="text-center">
+        @isset($search)
+        <a href="{{ url('/') }}">Back To Home</a>
+        @endisset
+    </div>
+
+    <div class="container">
+        <div class="input-container">
+            <form action="{{ url('/search') }}" method="post">
+                @csrf
+                <i class="fas fa-magnifying-glass search-btn" type="submit" style="cursor: pointer"></i>
+                <input type="text" name="search" class="form-control" placeholder="Search" required>
+            </form>
+        </div>
+    </div>
+
     <div class="row mt-5">
         @foreach ($blogs as $blog)
         <div class="col-lg-4 col-sm-12 mt-5">
