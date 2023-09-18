@@ -24,6 +24,15 @@ class HomeController extends Controller
         return view('welcome', compact('blogs'));
     }
 
+    public function search(Request $request){
+        if(!$request->search){
+            return redirect()->back();
+        }
+        $search = $request->search;
+        $blogs = Blog::where('title', 'like', '%' . $search . '%')->latest()->paginate(9);
+        return view('welcome', compact('blogs', 'search'));
+    }
+
     public function like($id){
         $blog = Blog::find($id);
         if(!$blog){
@@ -49,6 +58,8 @@ class HomeController extends Controller
         // return $comments;
         return view('blog-detail', compact('blog', 'comments'));
     }
+
+
 
     //comment section
     public function comment(Request $request, $id){
