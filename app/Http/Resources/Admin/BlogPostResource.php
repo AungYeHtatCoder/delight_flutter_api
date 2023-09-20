@@ -4,7 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Models\User;
 class BlogPostResource extends JsonResource
 {
     /**
@@ -14,6 +14,6 @@ class BlogPostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+    return parent::toArray($request);
     }
 }

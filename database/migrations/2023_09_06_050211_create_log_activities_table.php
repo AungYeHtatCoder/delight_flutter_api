@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('log_activities', function (Blueprint $table) {
-            $table->id();
+            $table->id()->default(null)->nullable();
             $table->string('subject')->nullable();
             $table->string('url')->nullable();
             $table->string('method')->nullable();

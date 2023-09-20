@@ -86,3 +86,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::post('/blogs/delete/', [BlogController::class, 'delete']);
 
     });
+
+    // csrf token error fix 
+    Route::get('/csrf-token', function () {
+        return response()->json(['csrfToken' => csrf_token()]);
+    });

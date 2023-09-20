@@ -62,3 +62,10 @@
 
 
 </head>
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> --}}
+
+<script>
+  // csrf token 
+  // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+  // console.log(CSRF_TOKEN)
+</script>

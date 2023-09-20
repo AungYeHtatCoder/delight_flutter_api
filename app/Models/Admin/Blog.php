@@ -13,7 +13,9 @@ class Blog extends Model
         'title', 'image', 'description', 'user_id'
     ];
 
-    public function users(){
+    // Define the "users" relationship as a "belongsTo" relationship
+    public function users()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Admin\AuthApiController;
 use App\Http\Controllers\Api\V1\Admin\RolesApiController;
 use App\Http\Controllers\Api\V1\Admin\UsersApiController;
+use App\Http\Controllers\Api\V1\Admin\BannerApiController;
 use App\Http\Controllers\Api\V1\Admin\ProfileApiController;
 use App\Http\Controllers\Api\V1\Admin\BlogPostApiController;
 use App\Http\Controllers\Api\V1\Admin\PermissionsApiController;
@@ -26,7 +27,11 @@ use App\Http\Controllers\Api\V1\User\NoAuth\UserBlogPostApiController;
 // });
 Route::post('/auth/register', [AuthApiController::class, 'createUser']);
 Route::post('/auth/login', [AuthApiController::class, 'loginUser']);
-Route::post('/auth/logout', [AuthApiController::class, 'logoutUser']);
+//Route::post('/auth/logout', [AuthApiController::class, 'logoutUser']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/auth/logout', [AuthApiController::class, 'logoutUser']);
+});
+
 //blog post
 Route::get('/blog-posts', [UserBlogPostApiController::class, 'index']);
 
@@ -50,4 +55,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     // Blog Post
     Route::post('blog-posts/media', [BlogPostApiController::class, 'storeMedia'])->name('blog-posts.storeMedia');
     Route::apiResource('blog-posts', BlogPostApiController::class);
+    // blog post detail route
+    Route::get('blog-posts/{id}', [BlogPostApiController::class, 'showDetail']);
+    Route::apiResource('banners', BannerApiController::class);
 });

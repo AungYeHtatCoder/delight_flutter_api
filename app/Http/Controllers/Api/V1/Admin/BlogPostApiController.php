@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Admin\Blog;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -57,25 +58,20 @@ class BlogPostApiController extends Controller
 
     public function show(Blog $blogPost)
     {
-        abort_if(Gate::denies('blog_post_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        //abort_if(Gate::denies('blog_post_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return new BlogPostResource($blogPost->load(['users']));
+    }
+    public function showDetail(Blog $blogPost)
+    {
+        //abort_if(Gate::denies('blog_post_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new BlogPostResource($blogPost->load(['users']));
     }
 
     public function update(Request $request, $id)
     {
-        // $blogPost->update($request->all());
-
-        // if ($request->input('image', false)) {
-        //     if (! $blogPost->image || $request->input('image') !== $blogPost->image->file_name) {
-        //         if ($blogPost->image) {
-        //             $blogPost->image->delete();
-        //         }
-        //         $blogPost->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
-        //     }
-        // } elseif ($blogPost->image) {
-        //     $blogPost->image->delete();
-        // }
+        
         $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -106,7 +102,6 @@ class BlogPostApiController extends Controller
             ]);
 
         }
-
         return (new BlogPostResource($blog))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);

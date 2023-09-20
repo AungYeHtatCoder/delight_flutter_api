@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use Log;
 use App\Models\User;
-use Illuminate\Http\Request;
 Use App\Http\Requests\LoginRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -121,14 +122,50 @@ class AuthApiController extends Controller
     // }
 
 
-    public function logoutUser(Request $request)
-    {
-        // Revoke the token that was used to authenticate the current request
-        $request->user()->currentAccessToken()->delete();
+    // public function logoutUser(Request $request)
+    // {
+    //     // Revoke the token that was used to authenticate the current request
+    //     $request->user()->currentAccessToken()->delete();
 
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'Logged out successfully'
+    //     ]);
+    // }
+
+//     public function logoutUser(Request $request)
+// {
+//     \Log::info('User:', [$request->user()]);
+//     \Log::info('Token:', [$request->user()->currentAccessToken()]);
+
+//     // Revoke the token that was used to authenticate the current request
+//     $request->user()->currentAccessToken()->delete();
+
+//     return response()->json([
+//         'status' => 'success',
+//         'message' => 'Logged out successfully'
+//     ]);
+// }
+
+public function logoutUser(Request $request)
+{
+    $token = $request->user()->currentAccessToken();
+    
+    if ($token && method_exists($token, 'delete')) {
+        $token->delete();
+    } elseif ($token) {
+        // This is a transient token, handle accordingly
+    } else {
         return response()->json([
-            'status' => 'success',
-            'message' => 'Logged out successfully'
+            'status' => 'error',
+            'message' => 'No current token found'
         ]);
     }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Logged out successfully'
+    ]);
+}
+
 }
